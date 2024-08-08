@@ -10,20 +10,34 @@ import {
 } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 
-export default function OrdersForMonth() {
+type OrdersForMonthProps = {
+    description: string;
+    title: string;
+    growthText: string;
+    progressValue: number;
+    progressAriaLabel: string;
+};
+
+export default function OrdersForMonth({
+    description,
+    title,
+    growthText,
+    progressValue,
+    progressAriaLabel,
+}: OrdersForMonthProps): JSX.Element {
     return (
         <Card>
             <CardHeader className="pb-2">
-                <CardDescription>This Month</CardDescription>
-                <CardTitle className="text-4xl">$5,329</CardTitle>
+                <CardDescription>{description}</CardDescription>
+                <CardTitle className="text-4xl">{title}</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="text-xs text-muted-foreground">
-                    +10% from last month
+                    {growthText}
                 </div>
             </CardContent>
             <CardFooter>
-                <Progress value={12} aria-label="12% increase" />
+                <Progress value={progressValue} aria-label={progressAriaLabel} />
             </CardFooter>
         </Card>
     )

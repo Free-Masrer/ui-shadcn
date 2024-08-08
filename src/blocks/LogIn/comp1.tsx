@@ -16,15 +16,45 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export default function Component1() {
+type Component1Props = {
+    cardDescription: string;
+    cardTitle: string;
+    stepsLabel: string;
+    stepsValue: number;
+    stepsUnit: string;
+    data: { date: string; steps: number }[];
+    averageSteps: number;
+    averageStepsLabel: string;
+    averageStepsValue: string;
+    totalStepsText: string;
+    totalStepsValue: number;
+    stepsToGoalText: string;
+    stepsToGoalValue: number;
+};
+
+export default function Component1({
+    cardDescription,
+    cardTitle,
+    stepsLabel,
+    stepsValue,
+    stepsUnit,
+    data,
+    averageSteps,
+    averageStepsLabel,
+    averageStepsValue,
+    totalStepsText,
+    totalStepsValue,
+    stepsToGoalText,
+    stepsToGoalValue,
+}: Component1Props): JSX.Element {
     return (
         <Card className="lg:max-w-md">
             <CardHeader className="space-y-0 pb-2">
-                <CardDescription>Today</CardDescription>
+                <CardDescription>{cardDescription}</CardDescription>
                 <CardTitle className="text-4xl tabular-nums">
-                    12,584{" "}
+                    {stepsValue}{" "}
                     <span className="font-sans text-sm font-normal tracking-normal text-muted-foreground">
-                        steps
+                        {stepsUnit}
                     </span>
                 </CardTitle>
             </CardHeader>
@@ -32,7 +62,7 @@ export default function Component1() {
                 <ChartContainer
                     config={{
                         steps: {
-                            label: "Steps",
+                            label: stepsLabel,
                             color: "hsl(var(--chart-1))",
                         },
                     }}
@@ -43,36 +73,7 @@ export default function Component1() {
                             left: -4,
                             right: -4,
                         }}
-                        data={[
-                            {
-                                date: "2024-01-01",
-                                steps: 2000,
-                            },
-                            {
-                                date: "2024-01-02",
-                                steps: 2100,
-                            },
-                            {
-                                date: "2024-01-03",
-                                steps: 2200,
-                            },
-                            {
-                                date: "2024-01-04",
-                                steps: 1300,
-                            },
-                            {
-                                date: "2024-01-05",
-                                steps: 1400,
-                            },
-                            {
-                                date: "2024-01-06",
-                                steps: 2500,
-                            },
-                            {
-                                date: "2024-01-07",
-                                steps: 1600,
-                            },
-                        ]}
+                        data={data}
                     >
                         <Bar
                             dataKey="steps"
@@ -109,20 +110,20 @@ export default function Component1() {
                             cursor={false}
                         />
                         <ReferenceLine
-                            y={1200}
+                            y={averageSteps}
                             stroke="hsl(var(--muted-foreground))"
                             strokeDasharray="3 3"
                             strokeWidth={1}
                         >
                             <Label
                                 position="insideBottomLeft"
-                                value="Average Steps"
+                                value={averageStepsLabel}
                                 offset={10}
                                 fill="hsl(var(--foreground))"
                             />
                             <Label
                                 position="insideTopLeft"
-                                value="12,343"
+                                value={averageStepsValue}
                                 className="text-lg"
                                 fill="hsl(var(--foreground))"
                                 offset={10}
@@ -134,11 +135,12 @@ export default function Component1() {
             </CardContent>
             <CardFooter className="flex-col items-start gap-1">
                 <CardDescription>
-                    Over the past 7 days, you have walked{" "}
-                    <span className="font-medium text-foreground">53,305</span> steps.
+                    {totalStepsText}{" "}
+                    <span className="font-medium text-foreground">{totalStepsValue}</span> steps.
                 </CardDescription>
                 <CardDescription>
-                    You need <span className="font-medium text-foreground">12,584</span>{" "}
+                    {stepsToGoalText}{" "}
+                    <span className="font-medium text-foreground">{stepsToGoalValue}</span>{" "}
                     more steps to reach your goal.
                 </CardDescription>
             </CardFooter>

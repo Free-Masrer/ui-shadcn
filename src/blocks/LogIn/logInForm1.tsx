@@ -1,52 +1,80 @@
 'use client'
-import dynamic from "next/dynamic"
-import Image from "next/image"
-import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
+import dynamic from "next/dynamic"
+import Link from "next/link"
+import Image from "next/image"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-export default function LogInForm1() {
+
+const Button = dynamic(() => import("@/components/ui/button").then((mod) => mod.Button), { ssr: true });
+
+type LogInForm1Props = {
+    title: string;
+    description: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    passwordLabel: string;
+    forgotPasswordText: string;
+    forgotPasswordLink: string;
+    submitButtonText: string;
+    googleButtonText: string;
+    signUpText: string;
+    signUpLink: string;
+};
+
+export default function LogInForm1({
+    title,
+    description,
+    emailLabel,
+    emailPlaceholder,
+    passwordLabel,
+    forgotPasswordText,
+    forgotPasswordLink,
+    submitButtonText,
+    googleButtonText,
+    signUpText,
+    signUpLink,
+}: LogInForm1Props): JSX.Element {
     return (
         <div className="mx-auto grid w-[350px] gap-6">
             <div className="grid gap-2 text-center">
-                <h1 className="text-3xl font-bold">Login</h1>
+                <h1 className="text-3xl font-bold">{title}</h1>
                 <p className="text-balance text-muted-foreground">
-                    Enter your email below to login to your account
+                    {description}
                 </p>
             </div>
             <div className="grid gap-4">
                 <div className="grid gap-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">{emailLabel}</Label>
                     <Input
                         id="email"
                         type="email"
-                        placeholder="m@example.com"
+                        placeholder={emailPlaceholder}
                         required
                     />
                 </div>
                 <div className="grid gap-2">
                     <div className="flex items-center">
-                        <Label htmlFor="password">Password</Label>
+                        <Label htmlFor="password">{passwordLabel}</Label>
                         <Link
-                            href="/forgot-password"
+                            href={forgotPasswordLink}
                             className="ml-auto inline-block text-sm underline"
                         >
-                            Forgot your password?
+                            {forgotPasswordText}
                         </Link>
                     </div>
                     <Input id="password" type="password" required />
                 </div>
                 <Button type="submit" className="w-full">
-                    Login
+                    {submitButtonText}
                 </Button>
                 <Button variant="outline" className="w-full">
-                    Login with Google
+                    {googleButtonText}
                 </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link href="#" className="underline">
+                {signUpText}{" "}
+                <Link href={signUpLink} className="underline">
                     Sign up
                 </Link>
             </div>
